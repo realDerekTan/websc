@@ -1,12 +1,17 @@
 // scrapes all of the CEOs of prominent corporations worldwide
 
-const rp = require("request-promise");
-const $ = require("cheerio");
+const request = require("request-promise");
+const cheerio = require("cheerio");
 const url = "https://en.wikipedia.org/wiki/List_of_chief_executive_officers";
 
-rp(url)
-  .then(function (html) {
-    console.log($("td > a", html).length);
-    console.log($("td > a", html));
-  })
-  .catch(function (err) {});
+async function main() {
+  const result = await request.get(url);
+  const $ = cheerio.load(result);
+  $(
+    "#mw-content-text > div > table.wikitable.sortable.jquery-tablesorter > tbody > tr > td > a"
+  ).each((index, element) => {
+    console.log($(element).text());
+  });
+}
+
+main();
