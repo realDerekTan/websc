@@ -6,6 +6,7 @@ const url = "https://en.wikipedia.org/wiki/List_of_chief_executive_officers";
 
 rp(url)
   .then(function (html) {
-    console.log(html);
+    console.log($("td > a", html).length);
+    console.log($("td > a", html));
   })
   .catch(function (err) {});
